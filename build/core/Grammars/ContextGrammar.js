@@ -53,6 +53,7 @@ exports.ConditionGrammar = {
     lex: {
         rules: [
             [`not\\s`, "return 'NOT'"],
+            [`${GrammarConstants_1.variablePropertyIdentifierRegex}`, "return 'PROPERTY'"],
             [`${GrammarConstants_1.variableIdentifierRegex}`, "return 'VARIABLE'"],
             [`$`, "return 'end-of-input'"],
             [`\.*`, "return 'INVALID'"],
@@ -67,8 +68,8 @@ exports.ConditionGrammar = {
             ],
         ],
         condition: [
-            [`NOT VARIABLE`, "$$ = [$1, $2]"],
-            [`VARIABLE`, "$$ = [$1]"],
+            [`NOT VARIABLE PROPERTY`, "$$ = [$1, $2]"],
+            [`VARIABLE PROPERTY`, "$$ = [$1]"],
         ],
     }
 };

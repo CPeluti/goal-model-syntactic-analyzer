@@ -12,11 +12,12 @@ import { stdout } from 'process';
 let isXmlConfigFile = false
 
 main()
-async function main() {
+export async function main(hddlPath: string = '', goalModelPath: string = '', configFilePath: string = '') {
 
   try {
-    const [hddlPath, goalModelPath, configFilePath] = process.argv.slice(2)
-
+    if(hddlPath == '' && goalModelPath== '' && configFilePath== ''){
+      [hddlPath, goalModelPath, configFilePath] = process.argv.slice(2)
+    }
     if (!hddlPath || !goalModelPath || !configFilePath) {
       throw Error('Error: failed to load files')
     }

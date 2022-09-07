@@ -115,7 +115,7 @@ class ModelValidator extends ModelRulesValidator_1.ModelRulesValidator {
         this.validateId(node.goalData.text, this.taskIdChecker());
         this.validateTaskTextProperty(node.goalData.text);
         this.validateTaskProperties(node.goalData.customProperties);
-        this.validateIfTaskParentHasMonitors(node.parent?.goalData.customProperties);
+        this.validateIfTaskParentHasMonitors(node.parent?.goalData.customProperties, node.goalData.customProperties);
         const taskParanteProperties = node.parent?.goalData.customProperties;
         let parentGoalIsGroupFalse = false;
         if (taskParanteProperties) {

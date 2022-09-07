@@ -89,12 +89,17 @@ class ModelRulesValidator {
         if (!queriedPropertyObj)
             return;
         let { queriedVariable, queryVariable, variablesInCondition } = queriedPropertyObj;
-        if (variablesInCondition) {
-            variablesInCondition.forEach((variable) => {
-                if (!variable?.includes(queryVariable.value)) {
-                    ErroLogger_1.ErrorLogger.log(`Query variable: "${queryVariable.value}" not equal to the variable: "${variable.split('.')[0]}" in the condition`);
+        if (variablesInCondition.length) {
+            const oclQueryVariable = variablesInCondition.filter((variable) => variable == queryVariable.value);
+            if (!oclQueryVariable.length) {
+                ErroLogger_1.ErrorLogger.log(`Query variable: ${queryVariable.value} not used in the OCL instruction`);
+            }
+            else if (oclQueryVariable.length == 1) {
+                const variableToCheck = variablesInCondition.find((variable) => variable !== queryVariable.value);
+                if (variableToCheck && variablesList[variableToCheck] == undefined) {
+                    ErroLogger_1.ErrorLogger.log(`Undeclared variable: ${variableToCheck} used in QueriedProperty OCL instruction`);
                 }
-            });
+            }
         }
         if (queriedVariable !== constants_1.WORLD_DB) {
             const variableType = variablesList[queriedVariable];
@@ -142,12 +147,17 @@ class ModelRulesValidator {
             return;
         }
         const { iteratedVariable, iterationVariable, variablesInCondition } = achieveConditionObj;
-        if (variablesInCondition) {
-            variablesInCondition.forEach((variable) => {
-                if (!variable?.includes(iterationVariable.value)) {
-                    ErroLogger_1.ErrorLogger.log(`Iteration variable: "${iterationVariable.value}" not equal to the variable: "${variable.split('.')[0]}" in the condition`);
+        if (variablesInCondition.length) {
+            const oclIterationVariable = variablesInCondition.filter((variable) => variable == iterationVariable.value);
+            if (!oclIterationVariable.length) {
+                ErroLogger_1.ErrorLogger.log(`Iteration variable: ${iterationVariable.value} not used in the OCL instruction`);
+            }
+            else if (oclIterationVariable.length == 1) {
+                const variableToCheck = variablesInCondition.find((variable) => variable !== iterationVariable.value);
+                if (variableToCheck && variablesList[variableToCheck] == undefined) {
+                    ErroLogger_1.ErrorLogger.log(`Undeclared variable: ${variableToCheck} used in UniversalAchieveCondition OCL instruction`);
                 }
-            });
+            }
         }
         if (variablesList[iteratedVariable] == undefined) {
             ErroLogger_1.ErrorLogger.log(`Iterated variable: ${iteratedVariable} was not previous instantiated`);
@@ -211,8 +221,6 @@ class ModelRulesValidator {
         const robotRegex = /(robot)(\s|\))/g;
         const robotTeamRegex = /(robotteam)(\s|\))/g;
         const hasRobotTeam = (hddlParametersString.match(new RegExp(robotTeamRegex)) != null);
-        const hasRobot = (hddlParametersString.match(new RegExp(robotRegex)) != null);
-        const hasRobotsOnHddl = (hasRobotTeam || hasRobot);
         const hddlRobotCountMatch = hddlParametersString.match(new RegExp(robotRegex));
         if (taskProperties.RobotNumber) {
             const robotNumberObj = taskRobotNumberJisonParser.parse(taskProperties.RobotNumber);
@@ -236,10 +244,10 @@ class ModelRulesValidator {
                         ErroLogger_1.ErrorLogger.log(`Task with a Non Group Parent must have 1 "robot" variable in its declaration or a RobotNumber attribute with 1 present in the range\n ->${errorMessage ? errorMessage : ''}`);
                     }
                 }
-                if (robotNumberObj.type === 'RANGE' && !hasRobotTeam) {
-                    ErroLogger_1.ErrorLogger.log(`RobotNumber of Range type must me mapped to a robotteam variable in the HDDL definition`);
-                }
-                if (robotNumberObj.type === 'NUMBER' && !hasRobotTeam) {
+                if (robotNumberObj.type && !hasRobotTeam) {
+                    if (robotNumberObj.type === 'RANGE') {
+                        robotNumberObj.value = robotNumberObj.value[1];
+                    }
                     try {
                         if (!hddlRobotCountMatch)
                             throw new Error;
@@ -249,21 +257,22 @@ class ModelRulesValidator {
                         }
                     }
                     catch (e) {
-                        ErroLogger_1.ErrorLogger.log(`RobotNumber with value: ${robotNumberObj.value} must map ${robotNumberObj.value} "robots" or a "robotteam" variable in the HDDL definition`);
+                        const errorMessageType = (robotNumberObj.type === 'RANGE') ? 'a max range of' : 'value';
+                        ErroLogger_1.ErrorLogger.log(`RobotNumber with ${errorMessageType}: ${robotNumberObj.value} must map ${robotNumberObj.value} "robots" or a "robotteam" variable in the HDDL definition`);
                     }
-                    const robotNumber = robotNumberObj.value;
                 }
             }
         }
-        else if (!taskProperties.RobotNumber && hasRobotsOnHddl) {
-            ErroLogger_1.ErrorLogger.log(`Tasks without a RobotNumber attribute cannot have a "robotteam" or a "robot" variables in the HDDL definition`);
+        else if (!taskProperties.RobotNumber && hasRobotTeam) {
+            ErroLogger_1.ErrorLogger.log(`Tasks without a RobotNumber attribute cannot have a "robotteam" variable in the HDDL definition`);
         }
     }
-    validateIfTaskParentHasMonitors(parentProperties) {
+    validateIfTaskParentHasMonitors(parentProperties, taskProperties) {
+        const taskHasVariables = taskProperties.Params || taskProperties.Location;
         if (!parentProperties) {
-            ErroLogger_1.ErrorLogger.log('Task musta have a Parent');
+            ErroLogger_1.ErrorLogger.log('Task must have a Parent');
         }
-        else if (!('Monitors' in parentProperties)) {
+        else if (taskHasVariables && !('Monitors' in parentProperties)) {
             ErroLogger_1.ErrorLogger.log('Task parent must have a Monitors property');
         }
     }

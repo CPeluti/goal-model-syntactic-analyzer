@@ -1,11 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JisonParser = void 0;
-const chalk_1 = __importDefault(require("chalk"));
 const JisonAPI = require("jison-gho");
+const ErroLogger_1 = require("./ErroLogger");
 class JisonParser {
     constructor(grammar) {
         this.parser = new JisonAPI.Parser(grammar);
@@ -24,13 +21,7 @@ class JisonParser {
             const lineNumberSeparator = errorLine.indexOf(' ');
             const lineNumber = errorLine.substring(0, lineNumberSeparator);
             const erroString = errorLine.substring(lineNumberSeparator + 1);
-            const printErrorRange = () => {
-                return chalk_1.default `{red ${lineNumber} }{white.bold ${erroString}}\n{red ${positionDottedLine}}`;
-            };
-            console.log(printErrorRange());
-            if (expected && token) {
-                console.log(chalk_1.default `{white.bold Expected : ${expected.join(' or ')} got ${token}}\n`);
-            }
+            ErroLogger_1.ErrorLogger.logParser(lineNumber, erroString, positionDottedLine, expected, token);
         };
     }
     parse(text) {
