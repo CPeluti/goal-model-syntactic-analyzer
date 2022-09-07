@@ -9,22 +9,23 @@
     "build": "rm -rf ./build && tsc --build",
     "build:run": "rm -rf ./build && tsc --build && node ./build/core/index.js",
     "pkg": "npm run build && rm -rf ./dist && pkg package.json",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch",
     "jison": "nodemon --watch './**/*.ts' --exec 'clear;ts-node' test_jison.ts"
   },
   "dependencies": {
     "chalk": "^4.1.2",
+    "fast-xml-parser": "^3.20.0",
+    "jest": "^29.0.2",
     "jison-gho": "^0.6.1-216",
-    "xml2js": "^0.4.23",
-    "fast-xml-parser": "^3.20.0"
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@types/node": "^16.6.1",
     "@types/xml2js": "^0.4.9",
-    "typescript": "^4.3.5",
-    "ts-node": "^10.2.0",
     "nodemon": "^2.0.12",
-    "pkg": "^5.3.1"
+    "pkg": "^5.3.1",
+    "ts-node": "^10.2.0",
+    "typescript": "^4.3.5"
   },
   "repository": {
     "type": "git",
@@ -43,5 +44,8 @@
   "bugs": {
     "url": "https://github.com/pablomuro/goal-model-syntactic-analyzer/issues"
   },
-  "homepage": "https://github.com/pablomuro/goal-model-syntactic-analyzer#readme"
+  "homepage": "https://github.com/pablomuro/goal-model-syntactic-analyzer#readme",
+  "jest": {
+    "modulePathIgnorePatterns": ["build", "core", "dist", "examples", "goal-model-examples", "test.ts"]
+  }
 }
