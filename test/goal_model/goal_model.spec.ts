@@ -1,8 +1,9 @@
-import {main} from '../../core/index'
-const func = () => {
-    return 3;
-}
+import {main} from "../../core/index"
 
-test('adds 1 + 2 to equal 3', () => {
-    expect(func()).toBe(3);
+test('Room Cleaning', async () => {
+    await main(
+        "../../goal-model-examples/Room Cleaning Example/hddl/Room Cleaning.hddl",
+        "../../goal-model-examples/Room Cleaning Example/gm/Room Cleaning.json",
+        "../../goal-model-examples/Room Cleaning Example/configs/Room Cleaning Config.json"
+    )
 });
