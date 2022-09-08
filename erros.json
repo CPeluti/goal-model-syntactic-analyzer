@@ -1,1 +1,0 @@
-[{"nodeId":"32b08e24-0c51-4a89-aa3b-76c0286aa454","nodeName":"AT2: RoomCleaningUV","message":"Tasks without a RobotNumber attribute cannot have a \"robotteam\" or a \"robot\" variables in the HDDL definition"}]

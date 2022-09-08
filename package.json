@@ -9,7 +9,7 @@
     "build": "rm -rf ./build && tsc --build",
     "build:run": "rm -rf ./build && tsc --build && node ./build/core/index.js",
     "pkg": "npm run build && rm -rf ./dist && pkg package.json",
-    "test": "jest --watch ./test",
+    "test": "jest ./test",
     "jison": "nodemon --watch './**/*.ts' --exec 'clear;ts-node' test_jison.ts"
   },
   "dependencies": {

@@ -3,9 +3,9 @@
 
 # Room Cleaning Exampl - JSON
 
-# npm run dev "./goal-model-examples/Room Cleaning Example/hddl/Room Cleaning.hddl"\
-#  "./goal-model-examples/Room Cleaning Example/gm/Room Cleaning.json"\
-#  "./goal-model-examples/Room Cleaning Example/configs/Room Cleaning Config.json"
+npm run dev "./goal-model-examples/Room Cleaning Example/hddl/Room Cleaning.hddl"\
+ "./goal-model-examples/Room Cleaning Example/gm/Room Cleaning.json"\
+ "./goal-model-examples/Room Cleaning Example/configs/Room Cleaning Config.json"
 
 # Exemplo Object Pickin - XML
 
@@ -36,9 +36,9 @@
 
 # Deliver Goods - Equipment
 
-npm run dev "./examples/Deliver Goods - Equipment/hddl/DeliverGoodsEqupments.hddl"\
- "./examples/Deliver Goods - Equipment/gm/DeliverGoodsEquipment.txt"\
- "./examples/Deliver Goods - Equipment/configuration/configuration.json"
+# npm run dev "./examples/Deliver Goods - Equipment/hddl/DeliverGoodsEqupments.hddl"\
+#  "./examples/Deliver Goods - Equipment/gm/DeliverGoodsEquipment.txt"\
+#  "./examples/Deliver Goods - Equipment/configuration/configuration.json"
 
 # Food Logistics
 
