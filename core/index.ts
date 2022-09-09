@@ -55,6 +55,7 @@ export async function main(hddlPath = '', goalModelPath = '', configFilePath = '
 
       const errorList = JSON.stringify(ErrorLogger.errorList)
       writeFileSync('goal-model-error-list.json', errorList)
+      // return errorList
       ErrorLogger.errorList = []
     }
   } catch (error) {

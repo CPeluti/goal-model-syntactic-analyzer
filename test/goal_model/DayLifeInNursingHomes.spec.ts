@@ -2,7 +2,7 @@ import type {error} from '../interfaces/error'
 import { main } from "../../core/index"
 import { readFileSync, unlinkSync } from 'fs'
 
-const baseDir = '/home/caio/goal-model-syntactic-analyzer/test/examples/RoboMAX'
+const baseDir = '/home/caio/projetos/les/goal-model-syntactic-analyzer/test/examples/RoboMAX'
 const example = 'Day Life In Nursing Homes'
 
 const validLog = [
@@ -31,11 +31,11 @@ const runMain = async (version: string = 'base', errCase: string = 'CleaningRoom
         `${baseDir}/${example}/${version}/gm/${errCase}.txt`,
         `${baseDir}/${example}/base/configuration/configurationCleaningRooms.json`
     )
-    const result = JSON.parse(readFileSync('/home/caio/goal-model-syntactic-analyzer/goal-model-error-list.json', 'utf-8'))
+    const result = JSON.parse(readFileSync('/home/caio/projetos/les/goal-model-syntactic-analyzer/goal-model-error-list.json', 'utf-8'))
     return result
 }
 describe('Cleaning Rooms', () => {
-
+    //TODO: separar os testes de caracterizacao dos de integracao
     test('Should generate a log containing all the syntax errors', async () => {
         const res = await runMain()
         expect(res).toBeTruthy()
@@ -45,7 +45,12 @@ describe('Cleaning Rooms', () => {
         const res = await runMain()
         expect(validLog).toEqual(res)
     })
+    // Testes de integracao
 
+    //TODO: melhorar o descritor do erro para especificar o erro
+    //TODO: criar lib para fazer o parser da string do erro.
+    
+    //TODO: criar gm especificos para cada falha (fazer aos poucos)
     test('Should catch an error at the select syntax', async () => {
         const res = await runMain('cases','selectSyntax')
         const error = findMessage(res,"1: world_db->select}\n^..................^\nExpected : \"(\" got \"end-of-input\"")
