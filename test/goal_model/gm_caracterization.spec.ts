@@ -19,7 +19,7 @@ const validLog = [
 describe('Cleaning Rooms', () => {
     
     //TODO: criar gm especificos para cada falha (fazer aos poucos)
-    test('Should catch an error at the select syntax', async () => {
+    it('Should fail when the select syntax is wrong', async () => {
         const expectedError = {
             expected: '"("',
             got: '"end-of-input"',
@@ -35,7 +35,7 @@ describe('Cleaning Rooms', () => {
         expect(error).toBe(true)
     })
 
-    test('Should catch an error at the node index', async () => {
+    it('Should fail when the node index is incorrect', async () => {
         const expectedError = {
             expected: 'ID should be: G2',
             got: null,
@@ -48,7 +48,7 @@ describe('Cleaning Rooms', () => {
         expect(error).toBe(true)
     })
 
-    test('Should catch an error at the invalid QueriedProperty key', async () => {
+    it('Should fail when the QueriedProperty key is invalid', async () => {
         const expectedError = {
             expected: 'Property: QueriedProperty is required on type: Query',
             got: null,
@@ -61,7 +61,7 @@ describe('Cleaning Rooms', () => {
         expect(error).toBe(true)
     })
 
-    test('Should catch an error at Query type without a valid QueriedProperty key', async () => {
+    it('Should fail when a Query type is without a valid QueriedProperty key', async () => {
         const expectedError = {
             expected: 'No QueriedProperty value defined',
             got: null,
@@ -75,7 +75,7 @@ describe('Cleaning Rooms', () => {
         expect(error).toBe(true)
     })
 
-    test('Should catch an error at control syntax missing ":"', async () => {
+    it('Should fail when the character ":" is missing', async () => {
         const expectedError = {
             expected: '":"',
             got: 'INVALID',
