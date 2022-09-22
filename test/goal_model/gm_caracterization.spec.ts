@@ -1,8 +1,6 @@
-import { main } from "../../core/index"
+
 import { parseTest, checkError } from "../util/logValidation" 
-import { readFileSync, unlinkSync } from 'fs'
-import path from 'path'
-const root = path.resolve(__dirname, '../../')
+import { runMain } from "../util/runMain"
 
 const validLog = [
     {
@@ -17,30 +15,8 @@ const validLog = [
     }
 ]
 
-const runMain = async (version: string = 'base', errCase: string = 'CleaningRooms') => {
-    await main(
-        `${root}/test/examples/base/hddl/DayLifeInNursingHomes.hddl`,
-        `${root}/test/examples/${version}/gm/${errCase}.txt`,
-        `${root}/test/examples/base/configuration/configurationCleaningRooms.json`
-    )
-    const result = JSON.parse(readFileSync(`${root}/goal-model-error-list.json`, 'utf-8'))
-    return result
-}
-describe('Cleaning Rooms', () => {
-    //TODO: separar os testes de caracterizacao dos de integracao
-    test('Should generate a log containing all the syntax errors', async () => {
-        const res = await runMain()
-        expect(res).toBeTruthy()
-    })
-    
-    test('Should pass with 2 default errors', async () => {
-        const res = await runMain()
-        expect(validLog).toEqual(res)
-    })
-    // Testes de integracao
 
-    //TODO: melhorar o descritor do erro para especificar o erro
-    //TODO: criar lib para fazer o parser da string do erro.
+describe('Cleaning Rooms', () => {
     
     //TODO: criar gm especificos para cada falha (fazer aos poucos)
     test('Should catch an error at the select syntax', async () => {
