@@ -3,8 +3,8 @@ import { main } from "../../core/index"
 import { parseTest } from "../util/parseTestLog" 
 import { readFileSync, unlinkSync } from 'fs'
 import { log } from '../interfaces/log'
-
-const baseDir = '/home/caio/projetos/les/goal-model-syntactic-analyzer/test/examples/RoboMAX'
+import path from 'path'
+const root = path.resolve(__dirname, '../../')
 const example = 'Day Life In Nursing Homes'
 
 const validLog = [
@@ -32,11 +32,11 @@ const findError = (array: Array<log>, logMessage: any): boolean => {
 
 const runMain = async (version: string = 'base', errCase: string = 'CleaningRooms') => {
     await main(
-        `${baseDir}/${example}/base/hddl/DayLifeInNursingHomes.hddl`,
-        `${baseDir}/${example}/${version}/gm/${errCase}.txt`,
-        `${baseDir}/${example}/base/configuration/configurationCleaningRooms.json`
+        `${root}/test/examples/RoboMAX/${example}/base/hddl/DayLifeInNursingHomes.hddl`,
+        `${root}/test/examples/RoboMAX/${example}/${version}/gm/${errCase}.txt`,
+        `${root}/test/examples/RoboMAX/${example}/base/configuration/configurationCleaningRooms.json`
     )
-    const result = JSON.parse(readFileSync('/home/caio/projetos/les/goal-model-syntactic-analyzer/goal-model-error-list.json', 'utf-8'))
+    const result = JSON.parse(readFileSync(`${root}/goal-model-error-list.json`, 'utf-8'))
     return result
 }
 describe('Cleaning Rooms', () => {
@@ -68,7 +68,6 @@ describe('Cleaning Rooms', () => {
         }
         const res = await runMain('cases','selectSyntax')
         const logs = parseTest(res)
-        console.log(logs)
         const error = findError(logs , expectedError)
         expect(error).toBe(true)
     })

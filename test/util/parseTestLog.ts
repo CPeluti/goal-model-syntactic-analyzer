@@ -8,6 +8,7 @@ export function parseTest(logJson: [log]): log[] {
         let at = null
         const message = log.message.split("\n")
         // Se mensagem de log não tiver mais de uma parte
+        // TODO: substituir esse switch por um regex
         switch(message.length){
             case 1:
                 expected = message[0]
@@ -18,7 +19,6 @@ export function parseTest(logJson: [log]): log[] {
                 break
             default:
                 const expGot = message[2].replace(/.*: /g , '').split(' got ')
-                console.log(expGot)
                 expected = expGot[0]
                 got = expGot[1]
                 at = message[0].split(': ')
