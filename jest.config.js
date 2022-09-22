@@ -5,5 +5,7 @@ module.exports = {
   moduleDirectories: ["node_modules", "core"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1"
-  }
+  },
+  verbose: true,
+  setupFilesAfterEnv: ["<rootDir>/test/setup.ts"]
 };

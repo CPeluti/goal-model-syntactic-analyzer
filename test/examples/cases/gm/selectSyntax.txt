@@ -1,0 +1,70 @@
+{
+  "actors": [
+    {
+      "id": "d3113e34-56de-4af4-8e04-54f0bf4a5c4f",
+      "text": "M2: Invalid select syntax",
+      "type": "istar.Actor",
+      "x": 384,
+      "y": 116,
+      "customProperties": {
+        "Description": ""
+      },
+      "nodes": [
+        {
+          "id": "db5a0aa5-d7c9-495b-a4e2-749ef0f8f56b",
+          "text": "G1: Node with correct syntax [G2]",
+          "type": "istar.Goal",
+          "x": 494,
+          "y": 163,
+          "customProperties": {
+            "Description": ""
+          }
+        },
+        {
+          "id": "eb6fe7e9-9105-47f2-b8a1-611ffe1cc2de",
+          "text": "G2: Invalid select syntax",
+          "type": "istar.Goal",
+          "x": 497,
+          "y": 260,
+          "customProperties": {
+            "Description": "",
+            "GoalType": "Query",
+            "QueriedProperty": "world_db->select",
+            "Controls": "rooms_to_clean : Sequence(Room)"
+          }
+        }
+      ]
+    }
+  ],
+  "orphans": [],
+  "dependencies": [],
+  "links": [
+    {
+      "id": "ad1ac27c-310a-44a4-9103-6ee6cfe8f938",
+      "type": "istar.AndRefinementLink",
+      "source": "eb6fe7e9-9105-47f2-b8a1-611ffe1cc2de",
+      "target": "db5a0aa5-d7c9-495b-a4e2-749ef0f8f56b"
+    }
+  ],
+  "display": {
+    "db5a0aa5-d7c9-495b-a4e2-749ef0f8f56b": {
+      "width": 112.609375,
+      "height": 46
+    },
+    "eb6fe7e9-9105-47f2-b8a1-611ffe1cc2de": {
+      "width": 101.609375,
+      "height": 43
+    }
+  },
+  "tool": "pistar.2.0.0",
+  "istar": "2.0",
+  "saveDate": "Thu, 22 Sep 2022 18:02:00 GMT",
+  "diagram": {
+    "width": 2000,
+    "height": 1300,
+    "name": "Welcome Model",
+    "customProperties": {
+      "Description": "Welcome to the piStar tool! This model describe some of the recent improvements in the tool.\n\nFor help using this tool, please check the Help menu above"
+    }
+  }
+}
