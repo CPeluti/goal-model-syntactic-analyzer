@@ -18,10 +18,12 @@
     "fast-xml-parser": "^3.20.0",
     "jest": "^28.0.8",
     "jison-gho": "^0.6.1-216",
+    "underscore": "^1.13.4",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@types/node": "^16.6.1",
+    "@types/underscore": "^1.11.4",
     "@types/xml2js": "^0.4.9",
     "nodemon": "^2.0.12",
     "pkg": "^5.3.1",
